@@ -16,7 +16,7 @@ torch = pytest.importorskip("torch")
 
 from src.models.content import ContentRecommender
 from src.models.hybrid import HybridRecommender
-from src.models.ncf import GMF, MLP, NeuMF, NCFDataset, NCFRecommender
+from src.models.ncf import GMF, MLP, NCFDataset, NCFRecommender, NeuMF
 
 
 def _toy_ratings() -> pd.DataFrame:
@@ -85,7 +85,7 @@ def test_ncf_dataset_negative_sampling_ratio():
     # Labels: exactly n_pos ones, rest zeros
     labels = [lbl for _, _, lbl in ds]
     assert sum(labels) == n_pos
-    assert sum(1 for l in labels if l == 0) == n_pos * 4
+    assert sum(1 for x in labels if x == 0) == n_pos * 4
 
 
 # ---- NCFRecommender end-to-end test ----
@@ -168,7 +168,6 @@ def test_hybrid_alpha_extremes():
     content.fit(train, movies=movies, tags=None)
 
     h_ncf = HybridRecommender(ncf_model=ncf, content_model=content, alpha=1.0)
-    h_content = HybridRecommender(ncf_model=ncf, content_model=content, alpha=0.0)
 
     ncf_recs = ncf.recommend(user_id=1, k=5)
     h_ncf_recs = h_ncf.recommend(user_id=1, k=5)

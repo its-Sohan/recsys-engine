@@ -102,7 +102,7 @@ def main() -> None:
                 print("         Train NCF on Colab: notebooks/03_ncf_training.ipynb")
                 print("         Then: python -m src.models.train --load-ncf artifacts/ncf.pth")
             else:
-                print(f"         Run: make train")
+                print("         Run: make train")
             continue
         print(f"\n=== Evaluating {name} ===")
         model = load_artifact(path)

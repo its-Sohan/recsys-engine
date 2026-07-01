@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from src.data.loader import build_implicit, build_id_maps, time_based_split
+from src.data.loader import build_id_maps, build_implicit, time_based_split
 from src.models.baseline import PopularityRecommender
 
 

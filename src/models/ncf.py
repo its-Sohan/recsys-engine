@@ -195,7 +195,7 @@ class NCFDataset(Dataset):
             [self.labels, np.zeros(len(neg_users), dtype=np.float32)]
         )
 
-        self.samples = list(zip(all_users, all_items, all_labels))
+        self.samples = list(zip(all_users, all_items, all_labels, strict=False))
 
     def __len__(self) -> int:
         return len(self.samples)

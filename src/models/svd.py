@@ -38,9 +38,7 @@ class SVDRecommender(Recommender):
         self._inner_to_raw_item: dict[int, int] = {}
 
     def fit(self, train: pd.DataFrame, **kwargs: Any) -> None:
-        from surprise import SVD
-        from surprise import Dataset
-        from surprise import Reader
+        from surprise import SVD, Dataset, Reader
 
         reader = Reader(rating_scale=(0.5, 5.0))
         data = Dataset.load_from_df(
