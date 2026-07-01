@@ -20,7 +20,7 @@ The headline model is **Neural Collaborative Filtering (NeuMF)** — a PyTorch i
 | SVD | Collaborative filtering | via scikit-surprise |
 | **NeuMF (NCF)** | Collaborative filtering | **PyTorch, from paper** — GMF + MLP fusion |
 | Content-based | Cold-start | TF-IDF on tags + genres, cosine sim |
-| Hybrid | Blended | Weighted NCF + content scores |
+| Hybrid | Blended | Rank-normalized NCF + content scores |
 
 ### Results
 
@@ -29,6 +29,7 @@ The headline model is **Neural Collaborative Filtering (NeuMF)** — a PyTorch i
 | Popularity | _TBD_ | _TBD_ | _TBD_ | _TBD_ |
 | SVD | _TBD_ | _TBD_ | _TBD_ | _TBD_ |
 | NeuMF (NCF) | _TBD_ | _TBD_ | _TBD_ | _TBD_ |
+| Content-based | _TBD_ | _TBD_ | _TBD_ | _TBD_ |
 | Hybrid | _TBD_ | _TBD_ | _TBD_ | _TBD_ |
 
 ## Architecture
@@ -71,8 +72,8 @@ Python 3.11 · PyTorch · scikit-surprise · FastAPI · Streamlit · Docker · R
 
 - [x] Repo scaffold
 - [x] Data download + processing
-- [x] Metrics module
+- [x] Metrics module (from scratch)
 - [x] Baseline + SVD
-- [ ] NCF (Week 2)
-- [ ] Content-based + hybrid + serving (Week 3)
+- [x] NCF (NeuMF in PyTorch) + Colab training notebook
+- [x] Content-based (cold-start) + Hybrid blender
 - [ ] Docker + deploy + frontend + polish (Week 4)

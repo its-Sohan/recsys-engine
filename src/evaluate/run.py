@@ -86,7 +86,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--k", type=int, default=10)
     parser.add_argument("--sample", type=int, default=5000, help="Cap on users evaluated (speed)")
-    parser.add_argument("--models", nargs="*", default=["popularity", "svd"])
+    parser.add_argument("--models", nargs="*", default=["popularity", "svd", "ncf"])
     args = parser.parse_args()
 
     bundle = load_data()
@@ -97,7 +97,12 @@ def main() -> None:
     for name in args.models:
         path = ARTIFACTS_DIR / f"{name}.joblib"
         if not path.exists():
-            print(f"  [skip] {name}: artifact not found at {path}. Run: make train")
+            print(f"  [skip] {name}: artifact not found at {path}")
+            if name == "ncf":
+                print("         Train NCF on Colab: notebooks/03_ncf_training.ipynb")
+                print("         Then: python -m src.models.train --load-ncf artifacts/ncf.pth")
+            else:
+                print(f"         Run: make train")
             continue
         print(f"\n=== Evaluating {name} ===")
         model = load_artifact(path)

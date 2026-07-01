@@ -31,6 +31,9 @@ test: ## Run tests
 train: ## Train all models (baseline, SVD; NCF trained in Colab)
 	python -m src.models.train --all
 
+load-ncf: ## Load a pretrained NCF checkpoint (artifacts/ncf.pth from Colab)
+	python -m src.models.train --load-ncf artifacts/ncf.pth
+
 evaluate: ## Evaluate trained models and emit results table
 	python -m src.evaluate.run
 

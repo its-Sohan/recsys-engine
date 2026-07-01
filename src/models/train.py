@@ -1,20 +1,19 @@
-"""Train baseline + SVD models and persist artifacts.
+"""Train/load baseline + SVD + NCF models and persist artifacts.
 
-NCF is trained separately in `notebooks/03_ncf_training.ipynb` on Google Colab
-(GPU). This entrypoint covers the CPU-friendly models only.
+NCF is trained in `notebooks/03_ncf_training.ipynb` on Google Colab GPU.
+Locally we only LOAD the pretrained `.pth` checkpoint (placed at
+`artifacts/ncf.pth` after the Colab run). Popularity and SVD train on CPU.
 
 Usage:
-    make train
-    python -m src.models.train            # train all
+    make train                              # train popularity + svd
     python -m src.models.train --models popularity svd
+    python -m src.models.train --models ncf --load artifacts/ncf.pth
 """
 from __future__ import annotations
 
 import argparse
 import sys
 import time
-
-import pandas as pd
 
 from src.data.loader import load_data
 from src.models.baseline import PopularityRecommender
@@ -43,15 +42,33 @@ def train_one(name: str, bundle) -> float:
     return elapsed
 
 
+def load_ncf(path) -> float:
+    """Load a pretrained NCF checkpoint (.pth) instead of training locally."""
+    from src.models.ncf import NCFRecommender
+
+    print(f"\n=== Loading NCF from {path} ===")
+    t0 = time.time()
+    model = NCFRecommender()
+    model.load(path)
+    elapsed = time.time() - t0
+    save_artifact(model, ARTIFACTS_DIR / "ncf.joblib")
+    print(f"Loaded NCF in {elapsed:.1f}s -> {ARTIFACTS_DIR / 'ncf.joblib'}")
+    return elapsed
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--all", action="store_true", help="Train all models (default if no --models)"
+        "--models", nargs="+", choices=list(MODELS), help="CPU-trainable models"
     )
     parser.add_argument(
-        "--models", nargs="+", choices=list(MODELS), help="Subset of models to train"
+        "--load-ncf", metavar="PATH", help="Load a pretrained NCF .pth checkpoint"
     )
     args = parser.parse_args()
+
+    if args.load_ncf:
+        load_ncf(args.load_ncf)
+        return
 
     names = args.models if args.models else list(MODELS)
     print(f"Models to train: {names}")
@@ -66,7 +83,7 @@ def main() -> None:
     print("\n=== Training summary ===")
     for name, secs in timings.items():
         print(f"  {name:12s} {secs:7.1f}s")
-    print("\nNext:  make evaluate")
+    print("\nNext:  make evaluate   (or load NCF:  python -m src.models.train --load-ncf artifacts/ncf.pth)")
 
 
 if __name__ == "__main__":
