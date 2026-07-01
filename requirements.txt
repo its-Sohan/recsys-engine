@@ -1,0 +1,30 @@
+# Core
+numpy>=1.24,<2.0
+pandas>=2.0,<3.0
+scipy>=1.10
+scikit-learn>=1.3
+
+# Recommender baselines
+scikit-surprise>=1.1.3
+joblib>=1.3
+
+# Deep learning (NCF)
+torch>=2.1
+
+# Serving
+fastapi>=0.104
+uvicorn[standard]>=0.24
+pyarrow>=14.0
+
+# Frontend
+streamlit>=1.28
+requests>=2.31
+
+# Dev tooling
+ruff>=0.1.6
+pytest>=7.4
+
+# Notebook
+jupyter>=1.0
+matplotlib>=3.7
+seaborn>=0.13
