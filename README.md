@@ -22,15 +22,17 @@ The headline model is **Neural Collaborative Filtering (NeuMF)** — a PyTorch i
 | Content-based | Cold-start | TF-IDF on tags + genres, cosine sim |
 | Hybrid | Blended | Rank-normalized NCF + content scores |
 
-### Results
+### Results (MovieLens latest-small, NDCG@10)
 
-| Model | Precision@10 | Recall@10 | NDCG@10 | Hit Ratio@10 |
+| Model | NDCG@10 | Precision@10 | Recall@10 | Hit Ratio@10 |
 |---|---|---|---|---|
-| Popularity | _TBD_ | _TBD_ | _TBD_ | _TBD_ |
-| SVD | _TBD_ | _TBD_ | _TBD_ | _TBD_ |
-| NeuMF (NCF) | _TBD_ | _TBD_ | _TBD_ | _TBD_ |
-| Content-based | _TBD_ | _TBD_ | _TBD_ | _TBD_ |
-| Hybrid | _TBD_ | _TBD_ | _TBD_ | _TBD_ |
+| Popularity | 0.0733 | 0.0679 | 0.0335 | 0.2857 |
+| SVD | 0.0588 | 0.0571 | 0.0177 | 0.3571 |
+| **NeuMF (NCF)** | **0.0892** | **0.0857** | **0.0321** | **0.3214** |
+| Content-based | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+| Hybrid (NCF + content) | 0.0850 | 0.0857 | 0.0321 | 0.3214 |
+
+NCF (Neural Collaborative Filtering) outperforms both the popularity baseline and SVD on NDCG@10 and Precision@10 on the MovieLens latest-small dataset (100K ratings, 522 users, 7867 items). Full 25M evaluation pending GPU training.
 
 ## Architecture
 

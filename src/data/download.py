@@ -15,6 +15,8 @@ import zipfile
 
 from src.utils.config import (
     DATA_DIR,
+    DATASET_SIZE,
+    DIR_NAME,
     MOVIELENS_DIR,
     MOVIELENS_URL,
     MOVIELENS_ZIP,
@@ -26,10 +28,9 @@ EXPECTED_FILES = [
     "movies.csv",
     "tags.csv",
     "links.csv",
-    "genome-scores.csv",
-    "genome-tags.csv",
-    "README.txt",
 ]
+if DATASET_SIZE == "large":
+    EXPECTED_FILES += ["genome-scores.csv", "genome-tags.csv", "README.txt"]
 
 
 def _md5(path):

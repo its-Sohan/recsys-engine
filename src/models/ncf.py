@@ -59,7 +59,7 @@ class GMF(nn.Module):
     def _init_weights(self) -> None:
         nn.init.normal_(self.user_emb.weight, mean=0.0, std=0.01)
         nn.init.normal_(self.item_emb.weight, mean=0.0, std=0.01)
-        nn.init.zeros_(self.out.weight)
+        nn.init.normal_(self.out.weight, mean=0.0, std=0.01)
 
     def forward(self, user_idx: torch.Tensor, item_idx: torch.Tensor) -> torch.Tensor:
         u = self.user_emb(user_idx)
@@ -99,7 +99,7 @@ class MLP(nn.Module):
         for m in self.net.modules():
             if isinstance(m, nn.Linear):
                 nn.init.xavier_uniform_(m.weight)
-        nn.init.zeros_(self.out.weight)
+        nn.init.normal_(self.out.weight, mean=0.0, std=0.01)
 
     def forward(self, user_idx: torch.Tensor, item_idx: torch.Tensor) -> torch.Tensor:
         u = self.user_emb(user_idx)
@@ -130,7 +130,7 @@ class NeuMF(nn.Module):
         self.gmf = GMF(n_users, n_items, gmf_dim)
         self.mlp = MLP(n_users, n_items, mlp_embed_dim, mlp_layers)
         self.fusion = nn.Linear(2, 1, bias=False)
-        nn.init.zeros_(self.fusion.weight)  # start neutral between branches
+        nn.init.normal_(self.fusion.weight, mean=0.0, std=0.1)
 
     def forward(self, user_idx: torch.Tensor, item_idx: torch.Tensor) -> torch.Tensor:
         gmf_logit = self.gmf(user_idx, item_idx)

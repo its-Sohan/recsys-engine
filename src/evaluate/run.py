@@ -86,7 +86,7 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--k", type=int, default=10)
     parser.add_argument("--sample", type=int, default=5000, help="Cap on users evaluated (speed)")
-    parser.add_argument("--models", nargs="*", default=["popularity", "svd", "ncf"])
+    parser.add_argument("--models", nargs="*", default=["popularity", "svd", "ncf", "content", "hybrid"])
     args = parser.parse_args()
 
     bundle = load_data()
