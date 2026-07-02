@@ -99,8 +99,8 @@ class ContentRecommender(Recommender):
 
         profile = self._user_profile.get(user_id)
         if profile is None:
-            # Cold user: fall back to globally popular-ish items (highest TF-IDF norm).
-            norms = np.asarray(self._tfidf_matrix.norm(axis=0)).ravel()
+            # Cold user: fall back to most-descriptive movies (highest TF-IDF row norm).
+            norms = np.sqrt(np.array(self._tfidf_matrix.multiply(self._tfidf_matrix).sum(axis=1))).ravel()
             scores = norms
         else:
             # Cosine similarity between user profile and every movie.

@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: recsys-engine
+    runtime: docker
+    repo: https://github.com/its-Sohan/recsys-engine
+    plan: free
+    envVars:
+      - key: TMDB_API_KEY
+        sync: false

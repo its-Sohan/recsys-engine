@@ -8,13 +8,14 @@ data/*.pth
 data/*.tar
 !data/.gitkeep
 
-# Artifacts
-artifacts/
+# Artifacts (model binaries — too large for git; regenerate via `make train`)
 *.pth
 *.pt
 *.ckpt
 *.joblib
 *.pkl
+!artifacts/results.csv
+!artifacts/results.md
 
 # Python
 __pycache__/
